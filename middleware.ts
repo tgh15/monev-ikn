@@ -37,6 +37,43 @@ export function middleware(req: NextRequest) {
         return NextResponse.next();
     }
 
+    // ✅ Proteksi semua route API (kecuali /api/auth)
+    if (pathname.startsWith("/api")) {
+        // For API routes we return 401 JSON instead of redirecting
+        if (pathname.startsWith("/api/auth")) {
+            // already allowed above, but double-check
+            return NextResponse.next();
+        }
+
+        if (!token) {
+            return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
+                status: 401,
+                headers: { "content-type": "application/json" },
+            });
+        }
+
+        console.log("[middleware] verifying API token");
+
+        if (!secret) {
+            console.log("[middleware] JWT_SECRET missing; rejecting API request");
+            return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
+                status: 401,
+                headers: { "content-type": "application/json" },
+            });
+        }
+
+        try {
+            jwt.verify(token, secret);
+            return NextResponse.next();
+        } catch (err: any) {
+            console.log("[middleware] API token verification failed:", err?.message);
+            return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
+                status: 401,
+                headers: { "content-type": "application/json" },
+            });
+        }
+    }
+
     // ✅ Proteksi semua route di bawah /admin
     if (pathname.startsWith("/admin")) {
         if (!token) {

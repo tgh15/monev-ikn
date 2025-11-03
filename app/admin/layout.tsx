@@ -1,18 +1,21 @@
 'use client';
-import { link } from "fs";
 import { Building2, FileText, Home, Menu, Settings, TrendingUp, Wallet, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Header from "@/components/layouts/header";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const pathname = usePathname();
     const menuItems = [
-        { icon: Home, label: 'Dashboard', active: true, link: '/' },
-        { icon: Building2, label: 'Perjalanan Dinas', active: false, link: '/perjalanan-dinas' },
-        { icon: Wallet, label: 'Surat', active: false, link: '/surat' },
-        { icon: FileText, label: 'Notulensi', active: false, link: '/notulensi' },
-        { icon: TrendingUp, label: 'Ajuan Perjalanan', active: false, link: '/' },
-        { icon: Settings, label: 'Pengaturan', active: false, link: '/' },
+        { icon: Home, label: 'Dashboard', active: true, link: '/admin' },
+        { icon: Wallet, label: 'Monev', active: false, link: '/admin/monev' },
+        // { icon: Building2, label: 'Perjalanan Dinas', active: false, link: '/admin/perjalanan-dinas' },
+        // { icon: Wallet, label: 'Surat', active: false, link: '/admin/surat' },
+        // { icon: FileText, label: 'Notulensi', active: false, link: '/admin/notulensi' },
+        // { icon: TrendingUp, label: 'Ajuan Perjalanan', active: false, link: '/admin/' },
+        // { icon: Settings, label: 'Pengaturan', active: false, link: '/admin/' },
     ];
     return (
         <>
@@ -71,10 +74,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                         //     <p className="text-xs text-blue-300">Sistem Pengelolaan Anggaran Daerah</p>
                         // </div>
                         <>
-                            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-2">
-                                <span className="text-blue-900 font-bold text-xl">KO</span>
-                            </div>
-                            <h2 className="font-bold text-lg">AKURAT</h2>
+
+                            <h2 className="font-bold text-lg text-center">SIPANDA</h2>
                         </>
                     )}
                     <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-blue-800 rounded-lg transition-colors">
@@ -83,18 +84,21 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 </div>
 
                 <nav className="p-4 space-y-2">
-                    {menuItems.map((item, idx) => (
-                        <Link href={item.link}
-                            key={idx}
-                            className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${item.active
-                                ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                                : 'text-blue-200 hover:bg-blue-800 hover:text-white'
-                                }`}
-                        >
-                            <item.icon size={20} />
-                            {sidebarOpen && <span className="font-medium">{item.label}</span>}
-                        </Link>
-                    ))}
+                    {menuItems.map((item, idx) => {
+                        const isActive = pathname === item.link || pathname.startsWith(item.link + "/admin");
+                        return (
+                            <Link href={item.link}
+                                key={idx}
+                                className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${isActive
+                                    ? 'bg-blue-600 text-white shadow-lg transform scale-105'
+                                    : 'text-blue-200 hover:bg-blue-800 hover:text-white'
+                                    }`}
+                            >
+                                <item.icon size={20} />
+                                {sidebarOpen && <span className="font-medium">{item.label}</span>}
+                            </Link>
+                        )
+                    })}
                 </nav>
 
                 {/* {sidebarOpen && (
@@ -108,15 +112,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {/* Main Content */}
             <div className="flex-1">
                 {/* Header */}
-                <div className="bg-white shadow-sm px-8 py-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold text-gray-800">Sistem Perjalanan Dinas - AKURAT</h1>
-                    <div className="flex items-center gap-4">
-                        <span className="text-gray-600">Selamat datang, <strong>12345678</strong></span>
-                        <button className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 transition">
-                            Keluar
-                        </button>
-                    </div>
-                </div>
+                <Header />
                 {children}
             </div>
         </>

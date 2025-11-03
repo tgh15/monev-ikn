@@ -19,19 +19,22 @@ export async function POST(req: Request) {
             expiresIn: "7d",
         });
 
-        const res = NextResponse.json({ message: "Login successful" });
+        console.log("[auth/login] user logged in:", user);
 
+        const res = NextResponse.json({ message: "Login successful" });
+        console.log("[auth/login] setting cookie for domain:", process.env.BASE_URL);
         res.cookies.set("token", token, {
             httpOnly: true,
             secure: true,
             sameSite: "none", // 🔥 wajib none kalau lintas domain
-            domain: ".thg15.my.id", // 🔥 pakai titik di depan agar berlaku untuk semua subdomain
+            domain: process.env.BASE_URL, // 🔥 pakai titik di depan agar berlaku untuk semua subdomain
             path: "/",
             maxAge: 7 * 24 * 60 * 60,
         });
 
         return res;
     } catch (err: any) {
-        return NextResponse.json({ message: err.message }, { status: 500 });
+        console.log("[auth/login] error:", err);
+        return NextResponse.json({ message: err }, { status: 500 });
     }
 }
