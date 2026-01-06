@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
  * @method GET
  * @description Fetches a single budget, its categories, and calculates the used amount and count for each status.
  */
-export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
+export async function GET(req: Request) {
     try {
         const { searchParams } = new URL(req.url);
         const budgetId = searchParams.get('budgetId');
