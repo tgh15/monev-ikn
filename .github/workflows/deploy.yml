@@ -1,0 +1,48 @@
+name: Deploy Next.js via Self-Hosted Runner
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # JOB 1: Build image di server GitHub (Cloud)
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Ganti 'username_kamu' dan 'nama-repo' sesuai Docker Hub kamu
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nama-repo:latest
+
+  # JOB 2: Deploy di VPS Lokal kamu
+  deploy-local:
+    runs-on: self-hosted # <--- Ini akan memerintahkan VPS lokal kamu
+    needs: build-and-push
+    steps:
+      - name: Pull and Restart Container
+        run: |
+          # Masuk ke folder project di VPS lokal
+          cd /home/stimi/teguh/monev-ikn
+
+          # Login ke docker (agar bisa pull image private jika ada)
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+          # Tarik image terbaru dan jalankan
+          docker compose pull
+          docker compose up -d
+
+          # Bersihkan image lama
+          docker image prune -f

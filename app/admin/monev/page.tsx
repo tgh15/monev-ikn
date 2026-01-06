@@ -40,7 +40,7 @@ export default function MonevPage() {
                         </p>
                     </div>
 
-                    <AddBudget />
+                    {/* <AddBudget /> */}
                 </div>
                 {/* Budget Cards Grid */}
                 <BudgetCard
