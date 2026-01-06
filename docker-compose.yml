@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   next-app:
     # Ganti dengan nama image yang Anda gunakan di GitHub Actions
