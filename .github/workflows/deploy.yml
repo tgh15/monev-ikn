@@ -42,7 +42,7 @@ jobs:
 
           # Tarik image terbaru dan jalankan
           docker compose pull
-          docker compose up -d
+          docker compose up -d --force-recreate
 
           # Bersihkan image lama
           docker image prune -f
