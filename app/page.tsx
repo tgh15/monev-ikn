@@ -14,6 +14,7 @@ import { formatCurrency, getPercentage } from '@/lib/utils';
 import ExpenditureTable from '@/components/expenditures/expenditures-table';
 import AlokasiAnggaranPerKlasifikasi from '@/components/stats/alokasi-anggaran-perklasifikasi';
 import CapaianRealisasiPerKlasifikasi from '@/components/stats/capaian-realisasi-perklasifikasi';
+import Image from 'next/image';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement);
 
@@ -81,13 +82,13 @@ export default function TransparencyLanding() {
                                         <span className="ml-3 text-xl font-bold text-gray-900">SIPANDA</span>
                                     </div>
                                 </div>
-                                <nav className="hidden md:ml-10 md:flex space-x-8">
+                                {/* <nav className="hidden md:ml-10 md:flex space-x-8">
                                     <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">Beranda</a>
                                     <a href="#statistik" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">Statistik</a>
                                     <a href="#proyek" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">Proyek</a>
                                     <a href="#laporan" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">Laporan</a>
                                     <a href="#kontak" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">Kontak</a>
-                                </nav>
+                                </nav> */}
                             </div>
                             {/* <div className="hidden md:flex items-center space-x-4">
                                 <div className="relative">
@@ -162,7 +163,7 @@ export default function TransparencyLanding() {
                             <p className='text-center md:text-left '>Platform digital terintegrasi untuk pengelolaan dan transparansi anggaran yang akuntabel, efisien, dan dapat diakses oleh publik secara real-time.</p>
                         </div>
                         <div className='flex md:justify-end justify-center col-span-2 md:col-span-1 min-h-90'>
-                            {/* <Image src={'/gue.png'} width={300} height={500} alt='foto' /> */}
+                            <Image src={'/maskot.png'} width={500} height={500} alt='foto' />
                         </div>
                     </div>
                 </section>
