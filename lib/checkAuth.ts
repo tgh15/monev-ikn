@@ -14,9 +14,9 @@ interface JWTPayload {
  * Verify JWT token from cookies.
  * Throws an error if invalid or missing.
  */
-export function verifyAuth(): JWTPayload {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
+export async function verifyAuth(): Promise<JWTPayload> {
+    const cookieStore = await cookies();
+    const token = cookieStore?.get("token")?.value;
 
     if (!token) {
         throw new Error("Unauthorized: Missing token");
