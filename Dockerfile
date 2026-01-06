@@ -17,6 +17,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ENV MONGODB_URI="mongodb://localhost:27017/dummy"
 # Matikan telemetri Next.js saat build untuk privasi
 ENV NEXT_TELEMETRY_DISABLED 1
 
