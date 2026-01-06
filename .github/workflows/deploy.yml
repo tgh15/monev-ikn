@@ -25,7 +25,7 @@ jobs:
           context: .
           push: true
           # Ganti 'username_kamu' dan 'nama-repo' sesuai Docker Hub kamu
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nama-repo:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ikn-monev:latest
 
   # JOB 2: Deploy di VPS Lokal kamu
   deploy-local:

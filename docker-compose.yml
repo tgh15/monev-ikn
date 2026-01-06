@@ -2,9 +2,13 @@ version: "3.8"
 
 services:
   next-app:
-    build: .
+    # Ganti dengan nama image yang Anda gunakan di GitHub Actions
+    image: tgh15/ikn-monev:latest
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    # Pastikan file .env dibaca jika ada variabel sensitif di VPS
+    env_file:
+      - .env
     restart: always
