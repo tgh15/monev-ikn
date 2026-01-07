@@ -10,19 +10,29 @@ export async function POST(req: Request) {
         await connectDB();
 
         const user = await User.findOne({ email });
-        if (!user) return NextResponse.json({ message: "User not found" }, { status: 404 });
+        if (!user)
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
 
         const valid = await bcrypt.compare(password, user.password);
-        if (!valid) return NextResponse.json({ message: "Invalid password" }, { status: 401 });
+        if (!valid)
+            return NextResponse.json(
+                { message: "Invalid password" },
+                { status: 401 },
+            );
 
-        const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET!, {
-            expiresIn: "7d",
+        const token = jwt.sign(
+            { id: user._id, email: user.email, role: user.role },
+            process.env.JWT_SECRET!,
+            {
+                expiresIn: "7d",
+            },
+        );
+
+        const res = NextResponse.json({
+            message: "Login successful",
+            role: user.role,
         });
 
-        console.log("[auth/login] user logged in:", user);
-
-        const res = NextResponse.json({ message: "Login successful" });
-        console.log("[auth/login] setting cookie for domain:", process.env.BASE_URL);
         res.cookies.set("token", token, {
             httpOnly: true,
             secure: true,
@@ -33,7 +43,7 @@ export async function POST(req: Request) {
         });
 
         return res;
-    } catch (err: any) {
+    } catch (err) {
         console.log("[auth/login] error:", err);
         return NextResponse.json({ message: err }, { status: 500 });
     }

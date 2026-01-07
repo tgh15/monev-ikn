@@ -5,13 +5,10 @@ import { Eye, EyeOff, Lock, Mail, User2 } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { login } from '@/lib/api/auth'
 import { Formik } from 'formik'
-import { useRouter } from 'next/navigation'
 import { Spinner } from '@/components/ui/spinner'
-import { toast } from 'sonner'
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
-    const router = useRouter()
     const initialValues = { email: '', password: '' }
 
     const validate = (values: typeof initialValues) => {
@@ -34,14 +31,16 @@ export default function LoginPage() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: login,
-        onSuccess: () => {
-            toast.success('Login successful!', { position: 'top-center' })
-            router.push('/admin')
+        onSuccess: (data) => {
+            console.log(data);
+            // toast.success("Login successful!", { position: "top-center" });
+            window.location.href = `/admin`;
         },
-        onError: (error: any) => {
-            toast.error(error?.message || 'Login failed', { position: 'top-center' })
-        }
-    })
+        onError: (error) => {
+            console.error(error);
+            // toast.error(error?.message || "Login failed", { position: "top-center" });
+        },
+    });
 
     const handleLogin = async (values: typeof initialValues) => {
         mutate(values)

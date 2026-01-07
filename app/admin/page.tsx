@@ -41,20 +41,20 @@ export default function Dashboard() {
                     )}
 
                     {/* Charts */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 gap-6">
                         {/* Realisasi Anggaran */}
                         <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                             <CapaianRealisasiPerKlasifikasi categories={categories} />
                         </div>
 
                         {/* Trend Penyerapan */}
-                        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                        {/* <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                             <div className="mb-4">
                                 <h3 className="text-lg font-bold text-gray-900">Realisasi vs Prognosis</h3>
                                 <p className="text-sm text-gray-500">Persentase penyerapan per bulan</p>
                             </div>
 
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Bottom Section */}
