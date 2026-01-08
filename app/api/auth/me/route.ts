@@ -27,8 +27,6 @@ export async function GET() {
                 { status: 404 }
             );
         }
-
-        // 4️⃣ Return data user
         return NextResponse.json(
             {
                 message: "success",
