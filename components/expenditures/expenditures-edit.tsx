@@ -167,7 +167,7 @@ export default function ExpenditureEdit({ data }: ExpenditureUpdateProps) {
                             </div>
 
                             {/* Lampiran */}
-                            <div>
+                            {/* <div>
                                 <label className="block text-sm font-medium mb-1">
                                     Lampiran
                                 </label>
@@ -194,7 +194,7 @@ export default function ExpenditureEdit({ data }: ExpenditureUpdateProps) {
                                         ))}
                                     </ul>
                                 )}
-                            </div>
+                            </div> */}
 
                             <DialogFooter className="sm:justify-end pt-4">
                                 <DialogClose asChild>
